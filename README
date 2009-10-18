@@ -9,18 +9,19 @@ Python's logging module does all the heavy lifting. As a result, you can use Jog
 This isn't production ready yet, but it will be soon. Feedback appreciated!
 
 ===========
-INSTALL
+Install
 ===========
 1. Add 'jogging' to your INSTALLED_APPS
 2. Add 'jogging.middleware.LoggingMiddleware' to your MIDDLEWARE_CLASSES
 
 ===========
-CONFIGURE
+Configure
 ===========
 Code samples are easier than words, so here's a few of them. These go in settings.py.
 
 Basic
 --------
+::
     from jogging.handlers import DatabaseHandler
     import logging
 
@@ -33,7 +34,8 @@ Note that Jogging doesn't wrap Handlers; they're the same as in logging. This me
 
 
 Intermediate
----------------- 
+----------------
+::
     from jogging.handlers import DatabaseHandler
     from logging.handlers import StreamHandler
     import logging
@@ -56,7 +58,8 @@ Only the most specific logger will be matched (i.e. myapp1.views.super_important
 
 
 Advanced
----------------- 
+----------------
+::
     from jogging.handlers import DatabaseHandler
     from logging.handlers import StreamHandler, FileHandler
     import logging
@@ -91,8 +94,9 @@ The format property on handlers takes the same specifiers as Python's logging, p
 - "%(foo)" is a parameter passed into the logging call.
 
 ===========
-USAGE
+Usage
 ===========
+::
     from jogging import logging
     logging.info("I'm an info message")
     logging.debug(msg="I'm a debug message", foo="bar")
@@ -112,7 +116,7 @@ jogging.handlers.InlineOnPageHandler
   Coming soon. Append logs to the bottom of the rendered page.
 
 ======================
-IMPLEMENTATION
+Implementation
 ======================
 Much inspiration was taken from Django's logging proposal:
 http://groups.google.com/group/django-developers/browse_thread/thread/8551ecdb7412ab22
@@ -124,7 +128,7 @@ Jogging requires a dictionary, settings.LOGGING, that defines the loggers you wa
 3. log() is called on the chosen logger, and Python's logging module takes over from here.
 
 ===========
-RESOURCES
+Resources
 ===========
 List of handlers in Python's logging module: 
 http://docs.python.org/library/logging.html#handler-objects
@@ -133,7 +137,7 @@ Format specifiers for Python's logging module:
 http://docs.python.org/library/logging.html#formatter-objects
 
 ===========
-TODO
+ToDo
 ===========
 - Figure out some way to instantiate handlers outside of settings.py (e.g. so the ORM can be used)
 - Create more custom handlers
