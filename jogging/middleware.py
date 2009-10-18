@@ -9,7 +9,7 @@ class LoggingMiddleware(object):
             
             if 'level' in properties:
                 logger.setLevel(properties['level'])
-            elif hasattr(settings, 'GLOBAL_LOG_LEVEL'):
+            elif hasattr(settings, 'GLOBAL_LOG_LEVEL') and 'handlers' not in properties:
                 logger.setLevel(settings.GLOBAL_LOG_LEVEL)
             else:
                 raise ImproperlyConfigured(

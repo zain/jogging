@@ -1,5 +1,9 @@
 import datetime, logging
 
+class NullHandler(logging.Handler):
+    def emit(self, record):
+        pass
+
 class DatabaseHandler(logging.Handler):
     def emit(self, record):
         from jogging.models import Log
