@@ -98,7 +98,7 @@ Advanced
 The format property on handlers takes the same specifiers as Python's logging, plus some extras:
 
 - ``%(source)s`` is the method that made the logging call.
-- ``%(foo)`` is a parameter passed into the logging call.
+- ``%(foo)s`` is a parameter passed into the logging call.
 
 ===========
 Usage
@@ -128,28 +128,31 @@ Custom Handlers
 FAQ
 ======================
 1. What's the difference between Jogging and django-logging?
+
 Django logging just sets up a single root logger for you. Jogging lets you set up different loggers for different modules.
 
 The "basic" configuration above solves the same use case as django-logging.
 
 2. What's the difference between Jogging and django-db-log?
+
 django-db-log just logs exceptions to the database. It's not for debug or general purpose logging, and doesn't have anything to do with Python's logging module.
 
 Jogging comes with a handler called DatabaseHandler that logs exceptions (and anything else you want) to the database much like django-db-log does.
 
 3. If you can use logging's log functions and still use Jogging, what's the benefit of using Jogging's log functions?
-Two reasons: firstly, you get a "source" variable you can use in your logger's formatter that is populated with the name of the calling function; and secondly, Jogging's log functions pick the right logger for you automatically, so you don't have to worry about whether the logger is already set up.
+
+Two reasons: firstly, you get a ``source`` variable you can use in your logger's formatter that is populated with the name of the calling function; and secondly, Jogging's log functions pick the right logger for you automatically, so you don't have to worry about whether the logger is already set up.
 
 ======================
 Implementation
 ======================
-Much inspiration was taken from =Django's logging proposal <http://groups.google.com/group/django-developers/browse_thread/thread/8551ecdb7412ab22>`_.
+Much inspiration was taken from `Django's logging proposal <http://groups.google.com/group/django-developers/browse_thread/thread/8551ecdb7412ab22>`_.
 
-Jogging requires a dictionary, settings.LOGGING, that defines the loggers you want to control through Jogging (by name). Here is how Jogging works:
+Jogging requires a dictionary, ``settings.LOGGING``, that defines the loggers you want to control through Jogging (by name). Here is how Jogging works:
 
-1. All loggers are created on server startup from settings.LOGGING (that code is in the middleware's __init__ function, for lack of a better place). Handlers are added to the loggers as defined, and levels are set.
-2. When your app calls Jogging's log functions, the calling function is matched against the logger names in settings.LOGGING and the most specific logger is chosen. For example, say myproj.myapp.views.func is the caller; it will match loggers named "myproj.myapp.views.func", "myproj.myapp.views", "myproj.myapp", and "myproj". The earliest one that matches will be chosen.
-3. log() is called on the chosen logger, and Python's logging module takes over from here.
+1. All loggers are created on server startup from ``settings.LOGGING`` (the init code is in the middleware's ``__init__`` function, for lack of a better place). Handlers are added to the loggers as defined, and levels are set.
+2. When your app calls Jogging's log functions, the calling function is matched against the logger names in ``settings.LOGGING`` and the most specific logger is chosen. For example, say ``myproj.myapp.views.func()`` is the caller; it will match loggers named ``myproj.myapp.views.func``, ``myproj.myapp.views``, ``myproj.myapp``, and ``myproj``. The first (most specific) one that matches will be chosen.
+3. ``log()`` is called on the chosen logger, and Python's logging module takes over from here.
 
 ===========
 Resources
