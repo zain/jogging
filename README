@@ -21,7 +21,9 @@ Code samples are easier than words, so here's a few of them. These go in setting
 
 Basic
 --------
+
 ::
+
     from jogging.handlers import DatabaseHandler
     import logging
 
@@ -35,7 +37,9 @@ Note that Jogging doesn't wrap Handlers; they're the same as in logging. This me
 
 Intermediate
 ----------------
+
 ::
+
     from jogging.handlers import DatabaseHandler
     from logging.handlers import StreamHandler
     import logging
@@ -59,7 +63,9 @@ Only the most specific logger will be matched (i.e. myapp1.views.super_important
 
 Advanced
 ----------------
+
 ::
+
     from jogging.handlers import DatabaseHandler
     from logging.handlers import StreamHandler, FileHandler
     import logging
@@ -96,7 +102,9 @@ The format property on handlers takes the same specifiers as Python's logging, p
 ===========
 Usage
 ===========
+
 ::
+
     from jogging import logging
     logging.info("I'm an info message")
     logging.debug(msg="I'm a debug message", foo="bar")
