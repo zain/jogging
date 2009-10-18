@@ -32,7 +32,7 @@ Basic
 
 Everything INFO and above will get logged to the database.
 
-Note that Jogging doesn't wrap Handlers; they're the same as in logging. This means you can do all the fancy schmancy things logger's Handlers let you do, and then throw the Handler objects into Jogger.
+Note that Jogging doesn't wrap Handlers; they're the same as in logging. This means you can do everything logging.Handler lets you do, and then throw the Handler objects into Jogger.
 
 
 Intermediate
