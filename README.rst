@@ -130,10 +130,10 @@ FAQ
 What's the difference between Jogging and django-logging?
     Django logging just sets up a single root logger for you. Jogging lets you set up different loggers for different modules. The "basic" configuration above solves the same use case as django-logging.
 
-2. What's the difference between Jogging and django-db-log?
+What's the difference between Jogging and django-db-log?
     django-db-log just logs exceptions to the database. It's not for debug or general purpose logging, and doesn't have anything to do with Python's logging module. Jogging comes with a handler called DatabaseHandler that logs exceptions (and anything else you want) to the database just like django-db-log does.
 
-3. If you can use logging's log functions and still use Jogging, what's the benefit of using Jogging's log functions?
+If you can use logging's log functions and still use Jogging, what's the benefit of using Jogging's log functions?
     Two reasons: firstly, you get a ``source`` variable you can use in your logger's formatter that is populated with the name of the calling function; and secondly, Jogging's log functions pick the right logger for you automatically, so you don't have to worry about whether the logger is already set up.
 
 ======================
