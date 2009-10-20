@@ -30,6 +30,22 @@ class LoggingWrapper(object):
         caller = sys._getframe(1).f_globals['__name__']
         self.log('critical', msg, caller, *args, **kwargs)
     
+    def exception(self, msg='', exception=None, request=None, *args, **kwargs):
+        import traceback, sys
+        
+        if exception:
+            tb = ''.join(traceback.format_exception(sys.exc_info()[0],
+                sys.exc_info()[1], sys.exc_info()[2]))
+        else:
+            tb = ''
+        
+        if request:
+            source = request.build_absolute_uri()
+        else:
+            source = 'Exception'
+        
+        self.log('error', msg + tb, source, *args, **kwargs)
+    
     def log(self, level, msg, source=None, *args, **kwargs):
         if not source:
             source = sys._getframe(1).f_globals['__name__']

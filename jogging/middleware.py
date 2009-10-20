@@ -36,4 +36,4 @@ class LoggingMiddleware(object):
 
     def process_exception(self, request, exception):
         from jogging import logging
-        logging.critical("DOOOOOOOOOOM!!!!") # TODO
+        logging.exception(exception=exception, request=request)
