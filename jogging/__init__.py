@@ -61,9 +61,10 @@ class LoggingWrapper(object):
         modules = ['.'.join(chunks[0:n]) for n in range(1, len(chunks) + 1)]
         modules.reverse()
         
-        for source in modules:
-            if source in settings.LOGGING:
-                return py_logging.getLogger(source)
+        if hasattr(settings, 'LOGGING'):
+            for source in modules:
+                if source in settings.LOGGING:
+                    return py_logging.getLogger(source)
         
         return py_logging.getLogger('') # root logger
 
