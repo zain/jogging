@@ -34,6 +34,8 @@ class LoggingMiddleware(object):
             self.add_handlers(logger, handlers)
     
     def add_handlers(self, logger, handlers):
+        import logging
+        
         if not handlers:
             return
         
