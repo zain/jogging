@@ -52,7 +52,7 @@ class LoggingWrapper(object):
 
         logger = self.get_logger(source)
         kwargs.update(source=source)
-        logger.log(level=self.LOGGING_LEVELS[level], msg=msg, extra=kwargs)
+        logger.log(level=self.LOGGING_LEVELS[level], msg=msg)
     
     def get_logger(self, source):
         from django.conf import settings
