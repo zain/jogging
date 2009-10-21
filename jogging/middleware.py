@@ -33,7 +33,7 @@ class LoggingMiddleware(object):
 
             self.add_handlers(logger, handlers)
     
-    def addHandlers(self, logger, handlers):
+    def add_handlers(self, logger, handlers):
         if not handlers:
             return
         

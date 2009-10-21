@@ -41,7 +41,7 @@ Intermediate
 ::
 
     from jogging.handlers import DatabaseHandler
-    from logging.handlers import StreamHandler
+    from logging import StreamHandler
     import logging
 
     LOGGING = {
@@ -67,7 +67,7 @@ Advanced
 ::
 
     from jogging.handlers import DatabaseHandler
-    from logging.handlers import StreamHandler, FileHandler
+    from logging import StreamHandler, FileHandler
     import logging
 
     LOGGING = {
