@@ -47,12 +47,18 @@ class LoggingWrapper(object):
         self.log('error', msg + tb, source, *args, **kwargs)
     
     def log(self, level, msg, source=None, *args, **kwargs):
+        import sys
+        
         if not source:
             source = sys._getframe(1).f_globals['__name__']
 
         logger = self.get_logger(source)
         kwargs.update(source=source)
-        logger.log(level=self.LOGGING_LEVELS[level], msg=msg, extra=kwargs)
+        
+        if sys.version_info >= (2, 5):
+            logger.log(level=self.LOGGING_LEVELS[level], msg=msg, extra=kwargs)
+        else:
+            logger.log(level=self.LOGGING_LEVELS[level], msg=msg)
     
     def get_logger(self, source):
         from django.conf import settings

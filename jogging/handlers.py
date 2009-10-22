@@ -7,4 +7,10 @@ class NullHandler(logging.Handler):
 class DatabaseHandler(logging.Handler):
     def emit(self, record):
         from jogging.models import Log
-        Log.objects.create(source=record.source, level=record.levelname, msg=record.msg)
+        
+        if hasattr(record, 'source'):
+            source = record.source
+        else:
+            source = "%s.%s" % (record.module, record.funcName)
+        
+        Log.objects.create(source=source, level=record.levelname, msg=record.msg)
