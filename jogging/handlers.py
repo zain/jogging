@@ -11,6 +11,6 @@ class DatabaseHandler(logging.Handler):
         if hasattr(record, 'source'):
             source = record.source
         else:
-            source = "%s.%s" % (record.module, record.funcName)
+            source = "%s:%s" % (record.pathname, record.lineno)
         
         Log.objects.create(source=source, level=record.levelname, msg=record.msg)
