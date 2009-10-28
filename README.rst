@@ -6,13 +6,19 @@ To use it, you add a few configurations to settings.py, import Jogging's log fun
 
 Python's logging module does all the heavy lifting. As a result, you can use Jogging to configure logging for code that already exists. And great care has been taken to make sure logging's power isn't hidden away behind abstractions.
 
-This isn't production ready yet, but it will be soon. Feedback appreciated!
+
+===========
+Download
+===========
+You can grab the latest release (v0.1, released 10/27/09) from the `Downloads<http://github.com/zain/jogging/downloads>` section.
+
 
 ===========
 Install
 ===========
 1. Add ``'jogging'`` to your ``INSTALLED_APPS``
 2. Add ``'jogging.middleware.LoggingMiddleware'`` to your ``MIDDLEWARE_CLASSES``
+
 
 ===========
 Configure
@@ -100,6 +106,7 @@ The format property on handlers takes the same specifiers as Python's logging, p
 - ``%(source)s`` is the method that made the logging call.
 - ``%(foo)s`` is a parameter passed into the logging call.
 
+
 ===========
 Usage
 ===========
@@ -110,7 +117,8 @@ Usage
     logging.info("I'm an info message")
     logging.debug(msg="I'm a debug message", foo="bar")
 
-Remember ``%(foo)s`` from the ``'format'`` property in the Advanced configuration above? It will be populated with ``"bar"`` in the debug call. 
+Remember ``%(foo)s`` from the ``'format'`` property in the Advanced configuration above? It will be populated with ``"bar"`` in the debug call.
+
 
 ======================
 Custom Handlers
@@ -124,6 +132,7 @@ Custom Handlers
 ``jogging.handlers.InlineOnPageHandler``
   Coming soon. Append logs to the bottom of the rendered page.
 
+
 ======================
 FAQ
 ======================
@@ -136,6 +145,7 @@ What's the difference between Jogging and django-db-log?
 If you can use logging's log functions and still use Jogging, what's the benefit of using Jogging's log functions?
     Two reasons: firstly, you get a ``source`` variable you can use in your logger's formatter that is populated with the name of the calling function; and secondly, Jogging's log functions pick the right logger for you automatically, so you don't have to worry about whether the logger is already set up.
 
+
 ======================
 Implementation
 ======================
@@ -147,6 +157,7 @@ Jogging requires a dictionary, ``settings.LOGGING``, that defines the loggers yo
 2. When your app calls Jogging's log functions, the calling function is matched against the logger names in ``settings.LOGGING`` and the most specific logger is chosen. For example, say ``myproj.myapp.views.func()`` is the caller; it will match loggers named ``myproj.myapp.views.func``, ``myproj.myapp.views``, ``myproj.myapp``, and ``myproj``. The first (most specific) one that matches will be chosen.
 3. ``log()`` is called on the chosen logger, and Python's logging module takes over from here.
 
+
 ===========
 Resources
 ===========
@@ -156,12 +167,13 @@ http://docs.python.org/library/logging.html#handler-objects
 Format specifiers for Python's logging module:
 http://docs.python.org/library/logging.html#formatter-objects
 
+
 ===========
 ToDo
 ===========
-- Figure out some way to instantiate handlers outside of settings.py (e.g. so the ORM can be used)
+- Instantiate handlers outside of settings.py (e.g. so the ORM can be used)
 - Create more custom handlers
-- Figure out how exceptions should be logged
+
 
 ===========
 The name
