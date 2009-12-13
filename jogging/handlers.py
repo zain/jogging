@@ -15,7 +15,7 @@ class DatabaseHandler(logging.Handler):
         
         Log.objects.create(source=source, level=record.levelname, msg=record.msg)
 
-class MailHandler(logging.Handler):
+class EmailHandler(logging.Handler):
     def __init__(self, from_email=None, recipient_spec=None, fail_silently=False, auth_user=None, auth_password=None, *args, **kwargs):
         logging.Handler.__init__(self, *args, **kwargs)
         self.recipient_spec = recipient_spec or () 
