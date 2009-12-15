@@ -127,7 +127,7 @@ Custom Handlers
   Logs to the database, so logs are browsable/searchable/filterable in the admin.
 
 ``jogging.handlers.EmailHandler``
-  Coming soon. Logs to emails.
+  Logs to emails.
 
 ``jogging.handlers.InlineOnPageHandler``
   Coming soon. Append logs to the bottom of the rendered page.
