@@ -56,7 +56,7 @@ class LoggingWrapper(object):
         kwargs.update(source=source)
         
         if sys.version_info >= (2, 5):
-            logger.log(level=self.LOGGING_LEVELS[level], msg=msg, extra=kwargs)
+            logger.log(self.LOGGING_LEVELS[level], msg, *args, extra=kwargs)
         else:
             logger.log(level=self.LOGGING_LEVELS[level], msg=msg)
     
