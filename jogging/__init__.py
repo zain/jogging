@@ -56,9 +56,9 @@ class LoggingWrapper(object):
         kwargs.update(source=source)
         
         if sys.version_info >= (2, 5):
-            logger.log(self.LOGGING_LEVELS[level], msg, *args, extra=kwargs)
+            logger.log(self.LOGGING_LEVELS[level], msg, *args, **{'extra': kwargs})
         else:
-            logger.log(level=self.LOGGING_LEVELS[level], msg=msg)
+            logger.log(self.LOGGING_LEVELS[level], msg, *args, **kwargs)
     
     def get_logger(self, source):
         from django.conf import settings
