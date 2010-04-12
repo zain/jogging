@@ -38,14 +38,25 @@ class LoggingWrapper(object):
                 sys.exc_info()[1], sys.exc_info()[2]))
         else:
             tb = ''
-        
+
         if request:
             source = request.build_absolute_uri()
+            try:
+                request_repr = repr(request)
+            except:
+                request_repr = "Request repr() unavailable"
+            message = u"""Source: %s
+========================================
+%s%s
+========================================
+Request:
+%s""" % (source, msg, tb, request_repr)
         else:
             source = 'Exception'
-        
-        self.log('error', msg + tb, source, *args, **kwargs)
-    
+            message = u"%s%s" % (msg, tb)
+
+        self.log('error', message, source, *args, **kwargs)
+
     def log(self, level, msg, source=None, *args, **kwargs):
         import sys
         
