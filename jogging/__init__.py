@@ -45,7 +45,7 @@ class LoggingWrapper(object):
                 request_repr = repr(request)
             except:
                 request_repr = "Request repr() unavailable"
-            message = u"""Source: %s
+            message = """Source: %s
 ========================================
 %s%s
 ========================================
@@ -53,7 +53,7 @@ Request:
 %s""" % (source, msg, tb, request_repr)
         else:
             source = 'Exception'
-            message = u"%s%s" % (msg, tb)
+            message = "%s%s" % (msg, tb)
 
         self.log('error', message, source, *args, **kwargs)
 
