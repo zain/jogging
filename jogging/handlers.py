@@ -1,4 +1,7 @@
 import datetime, logging
+import os
+
+HOST = os.uname()[1]
 
 class NullHandler(logging.Handler):
     def emit(self, record):
@@ -13,7 +16,7 @@ class DatabaseHandler(logging.Handler):
         else:
             source = record.name
         
-        Log.objects.create(source=source, level=record.levelname, msg=record.msg)
+        Log.objects.create(source=source, level=record.levelname, msg=record.msg, host=HOST)
 
 class EmailHandler(logging.Handler):
     def __init__(self, from_email=None, recipient_spec=None, fail_silently=False, auth_user=None, auth_password=None, *args, **kwargs):
@@ -34,7 +37,7 @@ class EmailHandler(logging.Handler):
             source = record.name
 
         send_mail(
-            subject=settings.EMAIL_SUBJECT_PREFIX + source + ": " + record.levelname.upper(),
+            subject="[%s] %s%s: %s" % (HOST, settings.EMAIL_SUBJECT_PREFIX, source, record.levelname.upper()),
             message=record.msg,
             from_email=self.from_email or settings.SERVER_EMAIL,
             recipient_list=[a[1] for a in (self.recipient_spec or settings.ADMINS)],
