@@ -55,3 +55,9 @@ class Log(models.Model):
     level = models.CharField(max_length=128)
     msg = models.TextField()
     source = models.CharField(max_length=128, blank=True)
+
+    def abbrev_msg(self, maxlen=500):
+        if len(self.msg) > maxlen:
+            return u'%s ...' % self.msg[:maxlen]
+        return self.msg
+    abbrev_msg.short_description = u'abbreviated msg'

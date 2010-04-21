@@ -32,7 +32,8 @@ class LoggingWrapper(object):
     
     def exception(self, msg='', exception=None, request=None, *args, **kwargs):
         import traceback, sys
-        
+        from django.utils.encoding import iri_to_uri
+
         if exception:
             tb = ''.join(traceback.format_exception(sys.exc_info()[0],
                 sys.exc_info()[1], sys.exc_info()[2]))
@@ -40,17 +41,20 @@ class LoggingWrapper(object):
             tb = ''
 
         if request:
-            source = request.build_absolute_uri()
+            location = '%s://%s%s' % (request.is_secure() and 'https' or 'http',
+                                      request.get_host(), request.path)
+            source = iri_to_uri(location)
+            absolute_uri = request.build_absolute_uri()
             try:
                 request_repr = repr(request)
             except:
                 request_repr = "Request repr() unavailable"
-            message = """Source: %s
+            message = """Absolute URI: %s
 ========================================
 %s%s
 ========================================
 Request:
-%s""" % (source, msg, tb, request_repr)
+%s""" % (absolute_uri, msg, tb, request_repr)
         else:
             source = 'Exception'
             message = "%s%s" % (msg, tb)
