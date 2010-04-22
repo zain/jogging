@@ -27,7 +27,7 @@ if hasattr(settings, 'LOGGING'):
 
         if 'level' in properties:
             logger.setLevel(properties['level'])
-        elif hasattr(settings, 'GLOBAL_LOG_LEVEL') and 'handlers' not in properties:
+        elif hasattr(settings, 'GLOBAL_LOG_LEVEL'):
             logger.setLevel(settings.GLOBAL_LOG_LEVEL)
         elif 'handlers' in properties:
             #the levels get set individually down below.
