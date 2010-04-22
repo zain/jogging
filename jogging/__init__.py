@@ -71,9 +71,9 @@ Request:
         kwargs.update(source=source)
         
         if sys.version_info >= (2, 5):
-            logger.log(level=self.LOGGING_LEVELS[level], msg=msg, extra=kwargs)
+            logger.log(level=self.LOGGING_LEVELS[level], msg=msg, extra=kwargs, *args)
         else:
-            logger.log(level=self.LOGGING_LEVELS[level], msg=msg)
+            logger.log(level=self.LOGGING_LEVELS[level], msg=msg, *args, **kwargs)
     
     def get_logger(self, source):
         from django.conf import settings
