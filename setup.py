@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='jogging',
       version='0.1',
@@ -10,5 +10,6 @@ setup(name='jogging',
       url='',
       packages = ['jogging',],
       package_dir = {'jogging':'jogging'},
+      test_suite='tests.main',
      )
 

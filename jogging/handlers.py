@@ -7,6 +7,14 @@ class NullHandler(logging.Handler):
     def emit(self, record):
         pass
 
+class MockHandler(logging.Handler):
+    def __init__(self, *args, **kwargs):
+        self.msgs = []
+        logging.Handler.__init__(self, *args, **kwargs)
+
+    def emit(self, record):
+        self.msgs.append(record)
+
 class DatabaseHandler(logging.Handler):
     def emit(self, record):
         from jogging.models import Log
