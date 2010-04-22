@@ -24,11 +24,14 @@ def add_handlers(logger, handlers):
 if hasattr(settings, 'LOGGING'):
     for module, properties in settings.LOGGING.items():
         logger = py_logging.getLogger(module)
-    
+
         if 'level' in properties:
             logger.setLevel(properties['level'])
         elif hasattr(settings, 'GLOBAL_LOG_LEVEL') and 'handlers' not in properties:
             logger.setLevel(settings.GLOBAL_LOG_LEVEL)
+        elif 'handlers' in properties:
+            #the levels get set individually down below.
+            pass
         else:
             raise ImproperlyConfigured(
                 "A logger in settings.LOGGING doesn't have its log level set. " +
@@ -55,6 +58,7 @@ class Log(models.Model):
     level = models.CharField(max_length=128)
     msg = models.TextField()
     source = models.CharField(max_length=128, blank=True)
+    host = models.CharField(max_length=200, blank=True, null=True)
 
     def abbrev_msg(self, maxlen=500):
         if len(self.msg) > maxlen:
