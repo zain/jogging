@@ -24,7 +24,11 @@ class DatabaseHandler(logging.Handler):
         else:
             source = record.name
         
-        Log.objects.create(source=source, level=record.levelname, msg=record.msg, host=HOST)
+        try:
+            Log.objects.create(source=source, level=record.levelname, msg=record.msg, host=HOST)
+        except:
+            # squelching exceptions sucks, but 500-ing because of a logging error sucks more
+            pass
 
 class EmailHandler(logging.Handler):
     def __init__(self, from_email=None, recipient_spec=None, fail_silently=False, auth_user=None, auth_password=None, *args, **kwargs):
