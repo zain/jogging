@@ -14,7 +14,7 @@ Python の logging モジュールが全ての重要な処理を担っている�
 ダウンロード
 ============
 
-最新リリース版 (2009/10/27 リリースの v0.1)を `ダウンロード <http://github.com/zain/jogging/downloads>`_ セクションから取得できます。
+最新リリース版 (2010/04/24 リリースの v0.2)を `ダウンロード <http://github.com/zain/jogging/downloads>`_ セクションから取得できます。
 
 
 ============
