@@ -153,7 +153,7 @@ Much inspiration was taken from `Django's logging proposal <http://groups.google
 
 Jogging requires a dictionary, ``settings.LOGGING``, that defines the loggers you want to control through Jogging (by name). Here is how Jogging works:
 
-1. All loggers are created on server startup from ``settings.LOGGING`` (the init code is in the middleware's ``__init__`` function, for lack of a better place). Handlers are added to the loggers as defined, and levels are set.
+1. All loggers are created on server startup from ``settings.LOGGING`` (the init code is in models.py, for lack of a better place). Handlers are added to the loggers as defined, and levels are set.
 2. When your app calls Jogging's log functions, the calling function is matched against the logger names in ``settings.LOGGING`` and the most specific logger is chosen. For example, say ``myproj.myapp.views.func()`` is the caller; it will match loggers named ``myproj.myapp.views.func``, ``myproj.myapp.views``, ``myproj.myapp``, and ``myproj``. The first (most specific) one that matches will be chosen.
 3. ``log()`` is called on the chosen logger, and Python's logging module takes over from here.
 
@@ -166,13 +166,6 @@ http://docs.python.org/library/logging.html#handler-objects
 
 Format specifiers for Python's logging module:
 http://docs.python.org/library/logging.html#formatter-objects
-
-
-===========
-ToDo
-===========
-- Instantiate handlers outside of settings.py (e.g. so the ORM can be used)
-- Create more custom handlers
 
 
 ===========
