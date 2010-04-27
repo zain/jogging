@@ -44,7 +44,7 @@ class EmailHandler(logging.Handler):
         from django.core.mail import send_mail 
 
         if hasattr(record, 'source'):
-            source - record.source
+            source = record.source
         else:
             source = record.name
 
