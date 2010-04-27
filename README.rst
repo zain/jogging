@@ -10,7 +10,7 @@ Python's logging module does all the heavy lifting. As a result, you can use Jog
 ===========
 Download
 ===========
-You can grab the latest release (v0.2, released 2010-04-24) from the `Downloads <http://github.com/zain/jogging/downloads>`_ section.
+You can grab the latest release from the `Downloads <http://github.com/zain/jogging/downloads>`_ section.
 
 
 ===========
