@@ -1,7 +1,7 @@
 import datetime, logging
-import os
+import platform
 
-HOST = os.uname()[1]
+HOST = platform.uname()[1]
 
 class NullHandler(logging.Handler):
     def emit(self, record):
