@@ -23,36 +23,20 @@ def main():
     )
     global_settings.DATABASE_ENGINE = "sqlite3"
     global_settings.DATABASE_NAME = ":memory:"
+    global_settings.ROOT_URLCONF = 'jogging.tests.urls'
+
+    global_settings.MIDDLEWARE_CLASSES = (
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'jogging.middleware.LoggingMiddleware',
+    )
 
     # jogging settings must be set up here.
     from jogging.handlers import DatabaseHandler, MockHandler
-    global_settings.GLOBAL_LOG_HANDLERS = [MockHandler()]
+    global_settings.GLOBAL_LOG_HANDLERS = []
     global_settings.GLOBAL_LOG_LEVEL = logging.INFO
-    global_settings.LOGGING = {
-        "database_test": {
-            "handlers": [DatabaseHandler()], 
-        },
-        "multi_test": {
-            "handlers": [DatabaseHandler(), MockHandler()],
-        },
-        "dict_handler_test": {
-            "level": logging.INFO,
-            "handlers": [{
-                "handler": MockHandler(),
-                "level": logging.ERROR,     
-            },
-            {
-                "handler": MockHandler(),
-                "format": "MYFORMAT - %(levelname)s - %(message)s",
-            }], 
-        },
-        "level_test": {
-            "handlers": [MockHandler()], 
-        },
-        "exception_test": {
-            "handlers": [MockHandler()], 
-        }
-    }
+    global_settings.LOGGING = {}
 
     from django.test.utils import get_runner
     test_runner = get_runner(global_settings)

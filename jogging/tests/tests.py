@@ -32,7 +32,7 @@ class DatabaseHandlerTestCase(DjangoTestCase):
         import logging
 
         # clear out all handlers on loggers
-        loggers = [logging.getLogger("database_test"), logging.getLogger("multi_test")]
+        loggers = [logging.getLogger(""), logging.getLogger("database_test"), logging.getLogger("multi_test")]
         for logger in loggers:
             logger.handlers = []
         
@@ -85,7 +85,7 @@ class DictHandlerTestCase(DjangoTestCase):
         import logging
 
         # clear out all handlers on loggers
-        loggers = [logging.getLogger("database_test"), logging.getLogger("multi_test")]
+        loggers = [logging.getLogger(""), logging.getLogger("database_test"), logging.getLogger("multi_test")]
         for logger in loggers:
             logger.handlers = []
         
@@ -107,3 +107,40 @@ class DictHandlerTestCase(DjangoTestCase):
         self.assertEquals(log_obj.levelname, "INFO")
         self.assertEquals(log_obj.name, "dict_handler_test")
         self.assertEquals(log_obj.msg, "My Logging Test")
+
+class GlobalExceptionTestCase(DjangoTestCase):
+
+    def setUp(self):
+        from jogging.handlers import DatabaseHandler, MockHandler
+        import logging
+
+        settings.LOGGING = {}
+        settings.GLOBAL_LOG_HANDLERS = [MockHandler()]
+        
+        jogging_init()
+    
+    def tearDown(self):
+        import logging
+
+        # clear out all handlers on loggers
+        loggers = [logging.getLogger("")]
+        for logger in loggers:
+            logger.handlers = []
+        
+        # delete all log entries in the database
+        for l in Log.objects.all():
+            l.delete()
+ 
+    def test_exception(self):
+        from views import TestException
+        try:
+            resp = self.client.get("/exception_view")
+            self.fail("Expected Exception")
+        except TestException:
+            pass
+        root_handler = logging.getLogger("").handlers[0]
+
+        log_obj = root_handler.msgs[0]
+        self.assertEquals(log_obj.levelname, "ERROR")
+        self.assertEquals(log_obj.name, "root")
+        self.assertTrue("Traceback" in log_obj.msg)

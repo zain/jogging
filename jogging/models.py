@@ -68,7 +68,7 @@ def jogging_init():
 
             add_handlers(logger, handlers)
 
-    elif hasattr(settings, 'GLOBAL_LOG_LEVEL') and hasattr(settings, 'GLOBAL_LOG_HANDLERS'):
+    if hasattr(settings, 'GLOBAL_LOG_LEVEL') and hasattr(settings, 'GLOBAL_LOG_HANDLERS'):
         logger = py_logging.getLogger('')
         logger.setLevel(settings.GLOBAL_LOG_LEVEL)
         handlers = settings.GLOBAL_LOG_HANDLERS
