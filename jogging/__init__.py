@@ -68,9 +68,10 @@ Request:
             source = sys._getframe(1).f_globals['__name__']
 
         logger = self.get_logger(source)
-        kwargs.update(source=source)
+
         
         if sys.version_info >= (2, 5):
+            kwargs.update(source=source)
             logger.log(level=self.LOGGING_LEVELS[level], msg=msg, extra=kwargs, *args)
         else:
             logger.log(level=self.LOGGING_LEVELS[level], msg=msg, *args, **kwargs)
