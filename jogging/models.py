@@ -20,6 +20,9 @@ class Log(models.Model):
             return u'%s ...' % self.msg[:maxlen]
         return self.msg
     abbrev_msg.short_description = u'abbreviated msg'
+    
+    class Meta:
+        get_latest_by = 'datetime'
 
 
 ## Set up logging handlers

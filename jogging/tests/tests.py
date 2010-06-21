@@ -43,7 +43,7 @@ class DatabaseHandlerTestCase(DjangoTestCase):
     def test_basic(self):
         logger = logging.getLogger("database_test")
         logger.info("My Logging Test")
-        log_obj = Log.objects.get(pk=1)
+        log_obj = Log.objects.latest()
         self.assertEquals(log_obj.level, "INFO")
         self.assertEquals(log_obj.source, "database_test")
         self.assertEquals(log_obj.msg, "My Logging Test")
@@ -53,7 +53,7 @@ class DatabaseHandlerTestCase(DjangoTestCase):
         logger = logging.getLogger("multi_test")
         logger.info("My Logging Test")
         
-        log_obj = Log.objects.get(pk=1)
+        log_obj = Log.objects.latest()
         self.assertEquals(log_obj.level, "INFO")
         self.assertEquals(log_obj.source, "multi_test")
         self.assertEquals(log_obj.msg, "My Logging Test")
