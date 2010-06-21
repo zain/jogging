@@ -109,13 +109,15 @@ class DictHandlerTestCase(DjangoTestCase):
         self.assertEquals(log_obj.msg, "My Logging Test")
 
 class GlobalExceptionTestCase(DjangoTestCase):
-
+    urls = 'jogging.tests.urls'
+    
     def setUp(self):
         from jogging.handlers import DatabaseHandler, MockHandler
         import logging
 
         settings.LOGGING = {}
         settings.GLOBAL_LOG_HANDLERS = [MockHandler()]
+        settings.GLOBAL_LOG_LEVEL = logging.DEBUG
         
         jogging_init()
     

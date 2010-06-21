@@ -40,7 +40,7 @@ def jogging_init():
                 logger.addHandler(handler)
 
 
-    if hasattr(settings, 'LOGGING'):
+    if hasattr(settings, 'LOGGING') and settings.LOGGING:
         for module, properties in settings.LOGGING.items():
             logger = py_logging.getLogger(module)
 
