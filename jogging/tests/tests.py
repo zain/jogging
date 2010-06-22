@@ -12,7 +12,9 @@ class DatabaseHandlerTestCase(DjangoTestCase):
     def setUp(self):
         from jogging.handlers import DatabaseHandler, MockHandler
         import logging
-
+        
+        self.LOGGING = getattr(settings, 'LOGGING', None)
+        
         settings.LOGGING = {
             'database_test': {
                 'handler': DatabaseHandler(),
@@ -39,6 +41,10 @@ class DatabaseHandlerTestCase(DjangoTestCase):
         # delete all log entries in the database
         for l in Log.objects.all():
             l.delete()
+        
+        if self.LOGGING:
+            settings.LOGGING = self.LOGGING
+        jogging_init()
     
     def test_basic(self):
         logger = logging.getLogger("database_test")
@@ -69,6 +75,8 @@ class DictHandlerTestCase(DjangoTestCase):
     def setUp(self):
         from jogging.handlers import MockHandler
         import logging
+        
+        self.LOGGING = getattr(settings, 'LOGGING', None)
 
         settings.LOGGING = {
             'dict_handler_test': {
@@ -92,6 +100,10 @@ class DictHandlerTestCase(DjangoTestCase):
         # delete all log entries in the database
         for l in Log.objects.all():
             l.delete()
+        
+        if self.LOGGING:
+            settings.LOGGING = self.LOGGING
+        jogging_init()
     
     def test_basic(self):
         logger = logging.getLogger("dict_handler_test")
@@ -114,7 +126,15 @@ class GlobalExceptionTestCase(DjangoTestCase):
     def setUp(self):
         from jogging.handlers import DatabaseHandler, MockHandler
         import logging
-
+        
+        self.LOGGING = getattr(settings, 'LOGGING', None)
+        self.GLOBAL_LOG_HANDLERS = getattr(settings, 'GLOBAL_LOG_HANDLERS', None)
+        self.GLOBAL_LOG_LEVEL = getattr(settings, 'GLOBAL_LOG_LEVEL', None)
+        
+        loggers = [logging.getLogger("")]
+        for logger in loggers:
+            logger.handlers = []
+        
         settings.LOGGING = {}
         settings.GLOBAL_LOG_HANDLERS = [MockHandler()]
         settings.GLOBAL_LOG_LEVEL = logging.DEBUG
@@ -132,6 +152,14 @@ class GlobalExceptionTestCase(DjangoTestCase):
         # delete all log entries in the database
         for l in Log.objects.all():
             l.delete()
+        
+        if self.LOGGING:
+            settings.LOGGING = self.LOGGING
+        if self.GLOBAL_LOG_HANDLERS:
+            settings.GLOBAL_LOG_HANDLERS = self.GLOBAL_LOG_HANDLERS
+        if self.GLOBAL_LOG_LEVEL:
+            settings.GLOBAL_LOG_LEVEL = self.GLOBAL_LOG_LEVEL
+        jogging_init()
  
     def test_exception(self):
         from views import TestException
