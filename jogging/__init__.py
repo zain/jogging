@@ -1,6 +1,8 @@
 import logging as py_logging
 import sys
 
+VERSION = (0, 2, 2)
+
 class LoggingWrapper(object):
     LOGGING_LEVELS = {
         'debug': py_logging.DEBUG,

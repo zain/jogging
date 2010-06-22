@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='jogging',
-      version='0.2.1',
+      version='0.2.2',
       description='Jogging makes logging in django easier',
       author='Zain',
       author_email='zain@inzain.net',
